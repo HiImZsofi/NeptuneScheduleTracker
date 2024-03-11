@@ -1,18 +1,22 @@
 package portfolio.sajat.nst.neptunescheduletracker.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
+@Setter
+@Getter
 public class User {
 
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int Id;
+    private int id;
     private String fullName;
     private String neptuneCode;
     private Date dateOfBirth;
@@ -20,8 +24,12 @@ public class User {
     private int currentSemester;
     private int subjectId;
 
-    public User(int id, String fullName, Date dateOfBirth, Date startOfStudies, int currentSemester, int subjectId){
+    public User(int id, String fullName, String neptuneCode, Date dateOfBirth, Date startOfStudies){
         super();
-
+        this.id = id;
+        this.fullName = fullName;
+        this.dateOfBirth = dateOfBirth;
+        this.startOfStudies = startOfStudies;
+        this.neptuneCode = neptuneCode;
     }
 }
