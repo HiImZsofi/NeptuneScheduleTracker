@@ -1,1 +1,7 @@
 services:
+  service1:
+    image: image1:tag1
+    ports:./
+      - "8080:8080"
+  service2:
+    image: image2:tag2
