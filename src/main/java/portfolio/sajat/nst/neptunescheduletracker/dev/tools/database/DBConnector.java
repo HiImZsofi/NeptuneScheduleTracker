@@ -1,32 +1,26 @@
 package portfolio.sajat.nst.neptunescheduletracker.dev.tools.database;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Connection {
+@Component
+public class DBConnector {
 
-    private static String dbUser;
-    private static String dbPass;
-    private static String dbUrl;
+    private String dbUser;
+    private String dbPass;
+    private String dbUrl;
 
-    @Value("${DB_USER}")
-    public void setDbUser(String dbUser) {
-        Connection.dbUser = dbUser;
+    public DBConnector(@Value("${DB_USER}") String dbUser, @Value("${DB_PASSWORD}") String password) {
+        this.dbUser = dbUser;
+        this.dbPass = password;
+        this.dbUrl = String.format("jdbc:mysql://localhost/?user=%s&password=%s", dbUser, dbPass);
     }
 
-    @Value("${DB_PASSWORD}")
-    public void setDbPass(String dbPass) {
-        Connection.dbPass = dbPass;
-    }
-
-    @Value("${DB_URL}")
-    public void setDbUrl(String dbUrl) {
-        Connection.dbUrl = dbUrl;
-    }
-
-    public static java.sql.Connection createConnection() throws SQLException {
+    public Connection createConnection() throws SQLException {
         try {
             return DriverManager.getConnection(dbUrl, dbUser, dbPass);
         } catch (SQLException e) {
