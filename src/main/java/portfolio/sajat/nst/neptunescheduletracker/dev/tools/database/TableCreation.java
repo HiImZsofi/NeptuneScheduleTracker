@@ -1,19 +1,14 @@
 package portfolio.sajat.nst.neptunescheduletracker.dev.tools.database;
 
-import jakarta.annotation.PostConstruct;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
-import portfolio.sajat.nst.neptunescheduletracker.NeptuneScheduleTrackerApplication;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.sql.Connection;
-import java.util.logging.Logger;
 
 /*
 Executable bean that automatically creates the empty database tables
@@ -40,7 +35,7 @@ public class TableCreation {
             scriptRunner.setStopOnError(true);
             scriptRunner.runScript(new FileReader(startPath));
         } catch (FileNotFoundException e) {
-            log.error("The given path could not be found");
+            log.error("Table create path could not be found");
         }
     }
 }
