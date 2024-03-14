@@ -10,12 +10,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.sql.Connection;
 
+/*
+Executable bean that automatically deletes all database tables
+!FOR TESTING PURPOSES ONLY!
+ */
 @Slf4j
 @Component
-public class TablePurging {
+public class TablePurge {
     private final String startPath;
 
-    public TablePurging(@Value("${TABLE_PURGE_SCRIPT_PATH}") String tablePurgeScriptPath) {
+    public TablePurge(@Value("${TABLE_PURGE_SCRIPT_PATH}") String tablePurgeScriptPath) {
         this.startPath = tablePurgeScriptPath;
     }
 
