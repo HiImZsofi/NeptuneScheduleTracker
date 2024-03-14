@@ -30,6 +30,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     runtimeOnly 'mysql:mysql-connector-java:8.0.27'
     implementation 'jakarta.persistence:jakarta.persistence-api:3.0.0'
+    implementation 'org.mybatis:mybatis:3.5.7'
 }
 
 tasks.named('test') {
