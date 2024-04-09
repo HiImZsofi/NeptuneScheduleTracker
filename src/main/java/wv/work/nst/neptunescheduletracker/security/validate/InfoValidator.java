@@ -1,4 +1,10 @@
 package wv.work.nst.neptunescheduletracker.security.validate;
 
-public class InfoValidator {
+import org.springframework.validation.Errors;
+
+/*
+ Inheritable interface for every validator class
+ */
+public interface InfoValidator<T> {
+    public void validate(T target, Errors errors);
 }
