@@ -1,4 +1,4 @@
-package wv.work.nst.neptunescheduletracker.entities;
+package wv.work.nst.neptunescheduletracker.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +16,11 @@ import java.time.LocalDate;
 @Getter
 public class User extends BaseEntity{
     @Column
-    private String fullName;
+    private String firstName;
+    @Column
+    private String lastName;
+    @Column
+    private String email;
     @Column
     private String neptuneCode;
     @Column
@@ -28,11 +32,13 @@ public class User extends BaseEntity{
     @Column
     private int subjectId;
 
-    public User(String fullName, String neptuneCode, LocalDate dateOfBirth, String startOfStudies){
+    public User(String firstName,String lastName, String neptuneCode, LocalDate dateOfBirth, String startOfStudies, String email){
         super();
-        this.fullName = fullName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.startOfStudies = startOfStudies;
         this.neptuneCode = neptuneCode;
+        this.email = email;
     }
 }
