@@ -1,4 +1,8 @@
 package wv.work.nst.neptunescheduletracker.security.validate;
 
-public class Validateable {
+/*
+  Inheritable interface for classes that require info validation
+ */
+public interface Validateable<This> {
+    public InfoValidator<This> validator();
 }
