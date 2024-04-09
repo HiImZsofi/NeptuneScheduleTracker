@@ -1,13 +1,18 @@
-package wv.work.nst.neptunescheduletracker.data;
+package wv.work.nst.neptunescheduletracker.register;
 
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Errors;
+import wv.work.nst.neptunescheduletracker.repository.UserRepository;
 import wv.work.nst.neptunescheduletracker.security.validate.InfoValidator;
 import wv.work.nst.neptunescheduletracker.security.validate.Validateable;
 
-import javax.validation.constraints.Size;
-
+/*
+ Data class for information required for registration
+*/
 @Data
 public class RegistrationInfo implements Validateable<RegistrationInfo> {
 
@@ -25,6 +30,21 @@ public class RegistrationInfo implements Validateable<RegistrationInfo> {
 
     @Override
     public InfoValidator<RegistrationInfo> validator() {
-        return null;
+        return new InfoValidator<RegistrationInfo>() {
+
+            @Autowired
+            UserRepository userRepository;
+
+            @Override
+            public void validate(RegistrationInfo target, Errors errors) {
+                if (!target.getPassword().equals(target.getPasswordConfirm())) {
+                    errors.rejectValue("password", "", "A két jelszó nem egyezik!");
+                }
+
+                if (userRepository.findOneByEmail(target.getEmail()) != null) {
+                    errors.rejectValue("email", "", "Ez az email cím már foglalt!");
+                }
+            }
+        };
     }
 }
