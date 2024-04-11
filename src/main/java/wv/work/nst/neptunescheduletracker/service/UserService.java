@@ -7,11 +7,20 @@ import wv.work.nst.neptunescheduletracker.repository.UserRepository;
 
 @Service
 public class UserService {
+
+    private final UserRepository userRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     //TODO password encoder
-    public User createUser(User user, String password) {
+    public User createUserWithCredidentials(User user, String password) {
+        return userRepository.save(user);
+    }
+
+    public User createUser(User user) {
         return userRepository.save(user);
     }
 }
