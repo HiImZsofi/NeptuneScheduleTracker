@@ -17,7 +17,7 @@ public class DbSeed {
     }
 
     public void seedEntity(){
-        userService.createUser(createEntity());
+        userService.createUserWithCredidentials(createEntity(), createEntity().getPassword());
     }
 
     public User createEntity(){
