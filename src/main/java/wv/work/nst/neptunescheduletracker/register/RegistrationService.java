@@ -17,6 +17,6 @@ public class RegistrationService {
         user.setLastName(registrationInfo.getLastName());
         user.setEmail(registrationInfo.getEmail()); //TODO neptune kod meg a tobbi
 
-        return userService.createUser(user, registrationInfo.getPassword());
+        return userService.createUserWithCredidentials(user, registrationInfo.getPassword());
     }
 }
