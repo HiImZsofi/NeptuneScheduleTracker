@@ -11,12 +11,12 @@ import wv.work.nst.neptunescheduletracker.register.RegistrationInfo;
 import wv.work.nst.neptunescheduletracker.service.RegistrationService;
 
 @Controller
-public class RegistractionController {
+public class RegistrationController {
 
     private final RegistrationService registrationService;
 
     @Autowired
-    public RegistractionController(RegistrationService registrationService) {
+    public RegistrationController(RegistrationService registrationService) {
         this.registrationService = registrationService;
     }
 
