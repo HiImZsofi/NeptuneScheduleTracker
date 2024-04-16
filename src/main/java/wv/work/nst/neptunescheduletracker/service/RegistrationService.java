@@ -1,9 +1,9 @@
-package wv.work.nst.neptunescheduletracker.register;
+package wv.work.nst.neptunescheduletracker.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wv.work.nst.neptunescheduletracker.entity.User;
-import wv.work.nst.neptunescheduletracker.service.UserService;
+import wv.work.nst.neptunescheduletracker.register.RegistrationInfo;
 
 @Service
 public class RegistrationService {
