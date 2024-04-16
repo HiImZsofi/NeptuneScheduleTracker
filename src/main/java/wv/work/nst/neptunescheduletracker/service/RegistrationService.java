@@ -8,8 +8,13 @@ import wv.work.nst.neptunescheduletracker.register.RegistrationInfo;
 @Service
 public class RegistrationService {
 
+
+    private final UserService userService;
+
     @Autowired
-    UserService userService;
+    public RegistrationService(UserService userService) {
+        this.userService = userService;
+    }
 
     public User register(RegistrationInfo registrationInfo){
         User user = new User();
