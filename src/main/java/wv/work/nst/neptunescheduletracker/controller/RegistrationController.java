@@ -1,6 +1,5 @@
 package wv.work.nst.neptunescheduletracker.controller;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import wv.work.nst.neptunescheduletracker.entity.User;
 import wv.work.nst.neptunescheduletracker.register.RegistrationInfo;
 import wv.work.nst.neptunescheduletracker.security.validate.ValidateRegistry;
 import wv.work.nst.neptunescheduletracker.service.RegistrationService;
@@ -50,9 +48,9 @@ public class RegistrationController {
                     .body(Collections.singletonMap("error", "Registration was unsuccessful"));
         }
 
-        try{
+        try {
             validateRegistry.validator().validate(registrationInfo, bindingResult);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(409).body(Collections.singletonMap("Ez az email cím már foglalt", e.getMessage()));
         }
 
