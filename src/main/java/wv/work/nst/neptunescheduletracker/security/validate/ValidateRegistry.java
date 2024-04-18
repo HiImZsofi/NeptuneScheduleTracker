@@ -3,6 +3,7 @@ package wv.work.nst.neptunescheduletracker.security.validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
+import wv.work.nst.neptunescheduletracker.exceptions.EmailIsTakenException;
 import wv.work.nst.neptunescheduletracker.register.RegistrationInfo;
 import wv.work.nst.neptunescheduletracker.repository.UserRepository;
 
@@ -21,13 +22,11 @@ public class ValidateRegistry implements Validateable<RegistrationInfo>{
         return new InfoValidator<RegistrationInfo>() {
 
             @Override
-            public boolean validate(RegistrationInfo target, Errors errors) {
-
+            public void validate(RegistrationInfo target, Errors errors) throws EmailIsTakenException {
                 if (userRepository.findOneByEmail(target.getEmail()) != null) {
                     errors.rejectValue("email", "emailIsTaken", "Ez az email cím már foglalt!");
-                    return false;
+                    throw new EmailIsTakenException("Email is taken");
                 }
-                return true;
             }
         };
     }
