@@ -49,9 +49,10 @@ public class RegistrationController {
         }
 
         try {
-            validateRegistry.validator().validate(registrationInfo, bindingResult);
+            //return 409 if user repository found the same email in db
+            if(validateRegistry.validator().validate(registrationInfo, bindingResult)) return ResponseEntity.status(409).body(Collections.singletonMap("Ez az email cím már foglalt", "error"));
         } catch (Exception e) {
-            return ResponseEntity.status(409).body(Collections.singletonMap("Ez az email cím már foglalt", e.getMessage()));
+            return ResponseEntity.status(500).body(Collections.singletonMap("Szerveroldali hiba lépett fel", e.getMessage()));
         }
 
         registrationService.register(registrationInfo);

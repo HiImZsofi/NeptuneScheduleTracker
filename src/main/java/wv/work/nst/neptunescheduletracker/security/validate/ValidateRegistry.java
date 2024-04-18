@@ -21,11 +21,13 @@ public class ValidateRegistry implements Validateable<RegistrationInfo>{
         return new InfoValidator<RegistrationInfo>() {
 
             @Override
-            public void validate(RegistrationInfo target, Errors errors) {
+            public boolean validate(RegistrationInfo target, Errors errors) {
 
                 if (userRepository.findOneByEmail(target.getEmail()) != null) {
-                    errors.rejectValue("email", "", "Ez az email cím már foglalt!");
+                    errors.rejectValue("email", "emailIsTaken", "Ez az email cím már foglalt!");
+                    return false;
                 }
+                return true;
             }
         };
     }

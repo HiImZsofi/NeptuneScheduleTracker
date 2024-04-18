@@ -6,5 +6,5 @@ import org.springframework.validation.Errors;
  Inheritable interface for every validator class
  */
 public interface InfoValidator<T> {
-    public void validate(T target, Errors errors);
+    public boolean validate(T target, Errors errors);
 }
