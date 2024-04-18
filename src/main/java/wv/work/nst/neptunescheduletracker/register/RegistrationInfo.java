@@ -25,7 +25,6 @@ public class RegistrationInfo implements Validateable<RegistrationInfo> {
     private String email;
     @Size(min = 6, max = 30, message = "A jelszónak legalább 6 karakter hosszúnak kell lennie!")
     private String password;
-    private String passwordConfirm;
 
 
     @Override
@@ -37,9 +36,6 @@ public class RegistrationInfo implements Validateable<RegistrationInfo> {
 
             @Override
             public void validate(RegistrationInfo target, Errors errors) {
-                if (!target.getPassword().equals(target.getPasswordConfirm())) {
-                    errors.rejectValue("password", "", "A két jelszó nem egyezik!");
-                }
 
                 if (userRepository.findOneByEmail(target.getEmail()) != null) {
                     errors.rejectValue("email", "", "Ez az email cím már foglalt!");
