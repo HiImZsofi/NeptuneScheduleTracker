@@ -1,6 +1,11 @@
 package wv.work.nst.neptunescheduletracker.controller;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
+import org.hibernate.NonUniqueObjectException;
+import org.hibernate.NonUniqueResultException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -10,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import wv.work.nst.neptunescheduletracker.exceptions.EmailIsTakenException;
 import wv.work.nst.neptunescheduletracker.register.RegistrationInfo;
 import wv.work.nst.neptunescheduletracker.security.validate.ValidateRegistry;
 import wv.work.nst.neptunescheduletracker.service.RegistrationService;
@@ -50,9 +56,9 @@ public class RegistrationController {
 
         try {
             //return 409 if user repository found the same email in db
-            if(validateRegistry.validator().validate(registrationInfo, bindingResult)) return ResponseEntity.status(409).body(Collections.singletonMap("Ez az email cím már foglalt", "error"));
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(Collections.singletonMap("Szerveroldali hiba lépett fel", e.getMessage()));
+            validateRegistry.validator().validate(registrationInfo, bindingResult);
+        } catch (EmailIsTakenException | IncorrectResultSizeDataAccessException e) {
+            return ResponseEntity.status(409).body(Collections.singletonMap("Ez az email cím már foglalt", "error"));
         }
 
         registrationService.register(registrationInfo);
