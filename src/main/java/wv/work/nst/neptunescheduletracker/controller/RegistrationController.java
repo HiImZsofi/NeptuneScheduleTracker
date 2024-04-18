@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import wv.work.nst.neptunescheduletracker.entity.User;
 import wv.work.nst.neptunescheduletracker.register.RegistrationInfo;
+import wv.work.nst.neptunescheduletracker.security.validate.ValidateRegistry;
 import wv.work.nst.neptunescheduletracker.service.RegistrationService;
 
 import java.util.Collections;
@@ -22,17 +23,18 @@ import java.util.Collections;
 public class RegistrationController {
 
     private final RegistrationService registrationService;
+    private final ValidateRegistry validateRegistry;
 
     @Autowired
-    public RegistrationController(RegistrationService registrationService) {
+    public RegistrationController(RegistrationService registrationService, ValidateRegistry validateRegistry) {
         this.registrationService = registrationService;
+        this.validateRegistry = validateRegistry;
     }
 
-    @RequestMapping("/")
-    public String form(Model model) {
-        model.addAttribute("registrationInfo", new RegistrationInfo());
-        return "registration/form";
-    }
+//    @RequestMapping("/")
+//    public String form(Model model) {
+//
+//    }
 
     @RequestMapping("/register")
     public ResponseEntity<Object> register(
@@ -41,10 +43,17 @@ public class RegistrationController {
             Model model,
             RedirectAttributes redirectAttributes
     ) {
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("registrationInfo", registrationInfo);
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
                     .body(Collections.singletonMap("error", "Registration was unsuccessful"));
+        }
+
+        try{
+            validateRegistry.validator().validate(registrationInfo, bindingResult);
+        }catch (Exception e){
+            return ResponseEntity.status(409).body(Collections.singletonMap("Ez az email cím már foglalt", e.getMessage()));
         }
 
         registrationService.register(registrationInfo);
