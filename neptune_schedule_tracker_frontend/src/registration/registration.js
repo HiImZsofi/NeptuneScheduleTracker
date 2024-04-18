@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {validateEmail} from "../utils/validation";
 
 function Registration(){
+    const [user, setUser] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -48,9 +49,27 @@ function Registration(){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert("Account created!");
+        const userData = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password.value,
+        };
+        console.log("UserData:", userData);
+        fetch('http://localhost:8080/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('User created:', data);
+            })
+            .catch(error => console.error('Error creating user:', error));
         clearForm();
-    }
+    };
 
     return(
         <div className="Registration">
