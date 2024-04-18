@@ -1,5 +1,6 @@
 package wv.work.nst.neptunescheduletracker.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -36,6 +37,7 @@ public class User extends BaseEntity{
     @Column
     private String password;
 
+    @JsonCreator
     public User(String firstName,String lastName, String neptuneCode, LocalDate dateOfBirth, String startOfStudies, String email){
         super();
         this.firstName = firstName;
@@ -46,6 +48,7 @@ public class User extends BaseEntity{
         this.email = email;
     }
 
+    @JsonCreator
     public User(String firstName, String lastName, String email, String password){
         super();
         this.firstName = firstName;
