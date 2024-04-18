@@ -8,6 +8,7 @@ function Registration(){
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
+    const [isEmailFree, setEmailFree] = useState(true);
     const [password, setPassword] = useState({
         value: "",
         isTouched: false,
@@ -26,6 +27,12 @@ function Registration(){
     const PasswordValidationError = () => {
         return (
             <p className="FieldError">A két jelszó nem egyezik!</p>
+        )
+    }
+
+    const EmailIsNotFreeError = () => {
+        return(
+            <p className="FieldError">Ez az email cím már foglalt!</p>
         )
     }
 
@@ -63,8 +70,14 @@ function Registration(){
             },
             body: JSON.stringify(userData),
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.status === 409) {
+                    setEmailFree(false);
+                }
+                return response.json();
+            })
             .then(data => {
+                setEmailFree(true);
                 console.log('User created:', data);
             })
             .catch(error => console.error('Error creating user:', error));
@@ -109,6 +122,10 @@ function Registration(){
                             }}
                             placeholder="Email address"
                         />
+                        {!isEmailFree ? (
+                            <EmailIsNotFreeError />
+                        ) : null}
+
                     </div>
                     <div className="Field">
                         <label>
