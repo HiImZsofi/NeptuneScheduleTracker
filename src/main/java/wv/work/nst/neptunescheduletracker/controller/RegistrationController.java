@@ -1,9 +1,5 @@
 package wv.work.nst.neptunescheduletracker.controller;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
-import org.hibernate.NonUniqueObjectException;
-import org.hibernate.NonUniqueResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -57,7 +53,8 @@ public class RegistrationController {
         try {
             //return 409 if user repository found the same email in db
             validateRegistry.validator().validate(registrationInfo, bindingResult);
-        } catch (EmailIsTakenException | IncorrectResultSizeDataAccessException e) {
+        } catch (EmailIsTakenException |
+                 IncorrectResultSizeDataAccessException e) { //todo miért dobja el előbb??????????????
             return ResponseEntity.status(409).body(Collections.singletonMap("Ez az email cím már foglalt", "error"));
         }
 
