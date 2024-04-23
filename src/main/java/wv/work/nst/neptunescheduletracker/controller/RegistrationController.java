@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import wv.work.nst.neptunescheduletracker.exceptions.EmailIsTakenException;
-import wv.work.nst.neptunescheduletracker.register.RegistrationInfo;
+import wv.work.nst.neptunescheduletracker.data.RegistrationInfo;
 import wv.work.nst.neptunescheduletracker.security.validate.ValidateRegistry;
 import wv.work.nst.neptunescheduletracker.service.RegistrationService;
 
@@ -30,11 +30,6 @@ public class RegistrationController {
         this.registrationService = registrationService;
         this.validateRegistry = validateRegistry;
     }
-
-//    @RequestMapping("/")
-//    public String form(Model model) {
-//
-//    }
 
     @RequestMapping("/register")
     public ResponseEntity<Object> register(

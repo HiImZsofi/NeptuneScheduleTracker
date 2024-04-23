@@ -3,7 +3,7 @@ package wv.work.nst.neptunescheduletracker.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wv.work.nst.neptunescheduletracker.entity.User;
-import wv.work.nst.neptunescheduletracker.register.RegistrationInfo;
+import wv.work.nst.neptunescheduletracker.data.RegistrationInfo;
 
 @Service
 public class RegistrationService {

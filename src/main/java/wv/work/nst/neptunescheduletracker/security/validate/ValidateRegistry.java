@@ -3,12 +3,12 @@ package wv.work.nst.neptunescheduletracker.security.validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
+import wv.work.nst.neptunescheduletracker.data.RegistrationInfo;
 import wv.work.nst.neptunescheduletracker.exceptions.EmailIsTakenException;
-import wv.work.nst.neptunescheduletracker.register.RegistrationInfo;
 import wv.work.nst.neptunescheduletracker.repository.UserRepository;
 
 @Component
-public class ValidateRegistry implements Validateable<RegistrationInfo>{
+public class ValidateRegistry implements Validateable<RegistrationInfo> {
 
     private final UserRepository userRepository;
 
