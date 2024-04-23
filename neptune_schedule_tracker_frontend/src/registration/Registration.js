@@ -1,4 +1,4 @@
-import './registration.css'
+import './Registration.css'
 import {useState} from "react";
 import {validateEmail} from "../utils/validation";
 
@@ -86,39 +86,39 @@ function Registration() {
         <div className="Registration">
             <form onSubmit={handleSubmit}>
                 <fieldset>
-                    <h2 className="Title">Sign Up</h2>
+                    <h2 className="Title">Regisztráció</h2>
                     <div className="Field">
                         <label>
-                            First name <sup>*</sup>
+                            Keresztnév <sup>*</sup>
                         </label>
                         <input
                             value={firstName}
                             onChange={(e) => {
                                 setFirstName(e.target.value);
                             }}
-                            placeholder="First name"
+                            placeholder="Keresztnév"
                         />
                     </div>
                     <div className="Field">
-                        <label>Last name</label>
+                        <label>Vezetéknév</label>
                         <input
                             value={lastName}
                             onChange={(e) => {
                                 setLastName(e.target.value);
                             }}
-                            placeholder="Last name"
+                            placeholder="Vezetéknév"
                         />
                     </div>
                     <div className="Field">
                         <label>
-                            Email address <sup>*</sup>
+                            Email cím <sup>*</sup>
                         </label>
                         <input
                             value={email}
                             onChange={(e) => {
                                 setEmail(e.target.value);
                             }}
-                            placeholder="Email address"
+                            placeholder="Email cím"
                         />
                         {!isEmailFree ? (
                             <EmailIsNotFreeError/>
@@ -127,7 +127,7 @@ function Registration() {
                     </div>
                     <div className="Field">
                         <label>
-                            Password <sup>*</sup>
+                            Jelszó <sup>*</sup>
                         </label>
                         <input
                             value={password.value}
@@ -138,7 +138,7 @@ function Registration() {
                             onBlur={() => {
                                 setPassword({...password, isTouched: true});
                             }}
-                            placeholder="Password"
+                            placeholder="Jelszó"
                         />
                         {password.isTouched && password.value.length === 0 ? (
                             <PasswordErrorMessage/>
@@ -146,7 +146,7 @@ function Registration() {
                     </div>
                     <div className="Field">
                         <label>
-                            Confirm Password <sup>*</sup>
+                            Jelszó mégegyszer <sup>*</sup>
                         </label>
                         <input
                             value={confPassword.value}
@@ -157,7 +157,7 @@ function Registration() {
                             onBlur={() => {
                                 setConfPassword({...confPassword, isTouched: true});
                             }}
-                            placeholder="Password confirmation"
+                            placeholder="Megerősítés"
                         />
                         {confPassword.isTouched && confPassword.value.length === 0 ? (
                             <PasswordErrorMessage/>
@@ -167,7 +167,7 @@ function Registration() {
                         ) : null}
                     </div>
                     <button type="submit" disabled={!getIsFormValid()}>
-                        Create account
+                        Regisztráció
                     </button>
                 </fieldset>
             </form>
