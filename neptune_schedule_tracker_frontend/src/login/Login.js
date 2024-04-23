@@ -90,6 +90,9 @@ function Login() {
                             <PasswordErrorMessage/>
                         ) : null}
                     </div>
+                    <button type="submit">
+                        Regisztráció
+                    </button>
                 </fieldset>
             </form>
         </div>
