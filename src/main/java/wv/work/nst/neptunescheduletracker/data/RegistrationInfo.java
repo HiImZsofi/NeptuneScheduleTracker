@@ -1,4 +1,4 @@
-package wv.work.nst.neptunescheduletracker.register;
+package wv.work.nst.neptunescheduletracker.data;
 
 import jakarta.validation.constraints.Size;
 import lombok.Data;
