@@ -26,8 +26,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public boolean matchPassword(User user, String password) {
+        return user.getPassword().equals(passwordEncoder.encoder().encode(password));
+    }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findOneByEmail(email);
     }
 
 }
