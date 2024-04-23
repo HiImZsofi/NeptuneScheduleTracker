@@ -48,7 +48,7 @@ function Login() {
                 return response.json();
             })
             .then(data => {
-                console.log("User logged in");
+                console.log("User logged in", data);
             })
             .catch(error => console.error("Login failed"));
         clearForm();
