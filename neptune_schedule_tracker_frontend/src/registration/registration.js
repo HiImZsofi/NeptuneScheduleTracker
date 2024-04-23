@@ -1,10 +1,8 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './registration.css'
-import { useEffect, useState } from "react";
+import {useState} from "react";
 import {validateEmail} from "../utils/validation";
 
-function Registration(){
-    const [user, setUser] = useState("");
+function Registration() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -31,7 +29,7 @@ function Registration(){
     }
 
     const EmailIsNotFreeError = () => {
-        return(
+        return (
             <p className="FieldError">Ez az email cím már foglalt!</p>
         )
     }
@@ -84,7 +82,7 @@ function Registration(){
         clearForm();
     };
 
-    return(
+    return (
         <div className="Registration">
             <form onSubmit={handleSubmit}>
                 <fieldset>
@@ -123,7 +121,7 @@ function Registration(){
                             placeholder="Email address"
                         />
                         {!isEmailFree ? (
-                            <EmailIsNotFreeError />
+                            <EmailIsNotFreeError/>
                         ) : null}
 
                     </div>
@@ -135,15 +133,15 @@ function Registration(){
                             value={password.value}
                             type="password"
                             onChange={(e) => {
-                                setPassword({ ...password, value: e.target.value });
+                                setPassword({...password, value: e.target.value});
                             }}
                             onBlur={() => {
-                                setPassword({ ...password, isTouched: true });
+                                setPassword({...password, isTouched: true});
                             }}
                             placeholder="Password"
                         />
                         {password.isTouched && password.value.length === 0 ? (
-                            <PasswordErrorMessage />
+                            <PasswordErrorMessage/>
                         ) : null}
                     </div>
                     <div className="Field">
@@ -162,10 +160,10 @@ function Registration(){
                             placeholder="Password confirmation"
                         />
                         {confPassword.isTouched && confPassword.value.length === 0 ? (
-                            <PasswordErrorMessage />
+                            <PasswordErrorMessage/>
                         ) : null}
                         {confPassword.value !== password.value && confPassword.value.length !== 0 ? (
-                            <PasswordValidationError />
+                            <PasswordValidationError/>
                         ) : null}
                     </div>
                     <button type="submit" disabled={!getIsFormValid()}>
