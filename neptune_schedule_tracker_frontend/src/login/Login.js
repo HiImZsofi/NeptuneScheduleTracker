@@ -1,5 +1,6 @@
 import './Login.css'
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -7,9 +8,15 @@ function Login() {
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
 
+    const navigate = useNavigate();
+
+    function SwitchToRegistration(){
+        navigate("/registration");
+    }
+
     const PasswordErrorMessage = () => {
         return (
-            <p className="FieldError">A jelszó nem lehet üres</p>
+            <p className="FieldError">A jelszó nem lehet üres!</p>
         );
     };
 
@@ -91,7 +98,10 @@ function Login() {
                         ) : null}
                     </div>
                     <button type="submit">
-                        Regisztráció
+                        Bejelentkezés
+                    </button>
+                    <button type="button" onClick={SwitchToRegistration} className="Redirect">
+                        Még nincs fiókod? Regisztrálj!
                     </button>
                 </fieldset>
             </form>

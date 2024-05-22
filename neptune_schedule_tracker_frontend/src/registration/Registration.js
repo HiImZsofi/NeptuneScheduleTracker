@@ -1,6 +1,7 @@
 import './Registration.css'
 import {useState} from "react";
 import {validateEmail} from "../utils/validation";
+import {Router, useNavigate} from "react-router-dom";
 
 function Registration() {
     const [firstName, setFirstName] = useState("");
@@ -15,6 +16,11 @@ function Registration() {
         value: "",
         isTouched: false,
     });
+    const navigate = useNavigate();
+
+    function SwitchToLogin(){
+        navigate("/login");
+    }
 
     const PasswordErrorMessage = () => {
         return (
@@ -168,6 +174,9 @@ function Registration() {
                     </div>
                     <button type="submit" disabled={!getIsFormValid()}>
                         Regisztráció
+                    </button>
+                    <button type="button" onClick={SwitchToLogin} className="Redirect">
+                        Van már fiókod? Jelentkezz be!
                     </button>
                 </fieldset>
             </form>
