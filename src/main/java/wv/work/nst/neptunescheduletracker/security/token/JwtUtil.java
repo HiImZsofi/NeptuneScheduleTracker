@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 public class JwtUtil {
 
     private final String secretKey = "randomsecret";
-    private long accessTokenValiditySeconds = 60*60*1000;
 
     private final JwtParser jwtParser;
 
@@ -28,6 +27,7 @@ public class JwtUtil {
         Claims claims = Jwts.claims().setSubject(user.getEmail());
         claims.put(TOKEN_HEADER, TOKEN_PREFIX + user.getEmail());
         Date tokenCreateTime = new Date();
+        long accessTokenValiditySeconds = 60 * 60 * 1000;
         Date expirationDate = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(accessTokenValiditySeconds));
         return Jwts.builder()
                 .setClaims(claims)
@@ -40,17 +40,17 @@ public class JwtUtil {
         return jwtParser.parseClaimsJws(token).getBody();
     }
 
-    public Claims resolveClaims(HttpServletRequest request){
-        try{
+    public Claims resolveClaims(HttpServletRequest request) {
+        try {
             String token = resolveToken(request);
-            if(token != null){
+            if (token != null) {
                 return parseClaims(token);
             }
             return null;
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             request.setAttribute("expired", e.getMessage());
             throw e;
-        }catch (Exception e){
+        } catch (Exception e) {
             request.setAttribute("invalid", e.getMessage());
             throw e;
         }
@@ -58,18 +58,18 @@ public class JwtUtil {
 
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(TOKEN_HEADER);
-        if(bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)){
+        if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
             return bearerToken.substring(TOKEN_PREFIX.length());
         }
 
         return null;
     }
 
-    public String getEmail(Claims claims){
+    public String getEmail(Claims claims) {
         return claims.getSubject();
     }
 
-    private List<String> getRoles(Claims claims){
+    private List<String> getRoles(Claims claims) {
         return (List<String>) claims.get("roles");
     }
 }
