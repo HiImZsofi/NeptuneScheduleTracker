@@ -3,7 +3,6 @@ package wv.work.nst.neptunescheduletracker.controller;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import wv.work.nst.neptunescheduletracker.data.LoginInfo;
 import wv.work.nst.neptunescheduletracker.entity.User;
 import wv.work.nst.neptunescheduletracker.security.token.JwtUtil;
@@ -54,27 +52,28 @@ public class LoginController {
 
         try {
 
-                //tries to create a token with a new user instance
-                Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginInfo.getEmail(), loginInfo.getPassword()));
-                String email = auth.getName();
-                User user = new User(email, loginInfo.getPassword());
-                String authorizationToken = jwtUtil.generateToken(user);
+            //tries to create a token with a new user instance
+            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginInfo.getEmail(), loginInfo.getPassword()));
+            String email = auth.getName();
+            User user = new User(email, loginInfo.getPassword());
+            String authorizationToken = jwtUtil.generateToken(user);
 
-                Cookie authCookie = assembleCookie(authorizationToken, true);
-                response.addCookie(authCookie);
+            Cookie authCookie = assembleCookie(authorizationToken, true);
+            response.addCookie(authCookie);
 
-                Map<String, String> responseBody = new HashMap<>();
-                responseBody.put("authToken", authorizationToken);
+            Map<String, String> responseBody = new HashMap<>();
+            responseBody.put("authToken", authorizationToken);
 
-                String forwardedToken = Authorization.split(" ")[1];
+            //split token from bearer
+            String forwardedToken = Authorization.split(" ")[1];
 
-                //if returned token is null also generate a refresh token
-                if(forwardedToken.equals("null")){
-                    String refreshToken = jwtUtil.generateExpiryToken(user);
-                    responseBody.put("refreshToken", refreshToken);
-                }
+            //if returned token is null also generate a refresh token
+            if (forwardedToken.equals("null")) {
+                String refreshToken = jwtUtil.generateExpiryToken(user);
+                responseBody.put("refreshToken", refreshToken);
+            }
 
-                return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+            return ResponseEntity.status(HttpStatus.OK).body(responseBody);
 
         } catch (BadCredentialsException e) {
             ResponseEntity<Object> body = getObjectResponseEntity(loginInfo);
@@ -82,7 +81,7 @@ public class LoginController {
             //send the correct status code if the error is caught
             if (body != null) return body;
         } catch (Exception e) {
-            //lmao
+            //sumn aint right
             return ResponseEntity.status(500).body(Collections.singletonMap("An error has occured: " + e.getMessage(), "error"));
         }
         return null;
