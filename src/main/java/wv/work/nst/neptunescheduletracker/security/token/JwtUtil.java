@@ -23,12 +23,25 @@ public class JwtUtil {
         this.jwtParser = Jwts.parser().setSigningKey(secretKey);
     }
 
+    //refresh token
+    public String generateExpiryToken(User user) {
+        Claims claims = Jwts.claims().setSubject(user.getEmail());
+        claims.put(TOKEN_HEADER, TOKEN_PREFIX + user.getEmail());
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + TimeUnit.HOURS.toMillis(1));
+        return Jwts.builder()
+                .setClaims(claims)
+                .setExpiration(expiryDate)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+    }
+
+    //authorization token
     public String generateToken(User user) {
         Claims claims = Jwts.claims().setSubject(user.getEmail());
         claims.put(TOKEN_HEADER, TOKEN_PREFIX + user.getEmail());
         Date tokenCreateTime = new Date();
-        long accessTokenValiditySeconds = 60 * 60 * 1000;
-        Date expirationDate = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(accessTokenValiditySeconds));
+        Date expirationDate = new Date(tokenCreateTime.getTime() + TimeUnit.MINUTES.toMillis(15));
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(expirationDate)
