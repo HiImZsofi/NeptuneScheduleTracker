@@ -33,6 +33,7 @@ function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const token = localStorage.getItem("refreshToken");
         const loginData = {
             email: email,
             password: password,
@@ -41,6 +42,7 @@ function Login() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify(loginData),
         })
@@ -55,6 +57,9 @@ function Login() {
                 return response.json();
             })
             .then(data => {
+                if(data.refreshToken){
+                    localStorage.setItem("refreshToken", data.refreshToken);
+                }
                 console.log("User logged in", data);
             })
             .catch(error => console.error("Login failed"));
